@@ -1,6 +1,7 @@
 import time
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
@@ -32,25 +33,25 @@ class WhatsApp:
         else:
             self.navegador.get(f"https://web.whatsapp.com/send?phone={numero}")
 
-        while len(self.navegador.find_elements_by_id("side")) < 1:
+        while len(self.navegador.find_elements(by=By.ID, value="side")) < 1:
             time.sleep(1)
 
         time.sleep(2)
 
     def wasAnswered(self, texto, total_mensage_enviadas=1):
         try:
-            div = self.navegador.find_element_by_class_name("y8WcF")
+            div = self.navegador.find_element(by=By.CLASS_NAME, value="y8WcF")
         except:
             return False
 
-        while len(div.find_elements_by_css_selector(".message-out, .message-in")) < 1:
+        while len(div.find_elements(by=By.CSS_SELECTOR, value=".message-out, .message-in")) < 1:
             time.sleep(1)
 
         for i in range(1, 3):
             div.send_keys(Keys.PAGE_UP)
             time.sleep(1)
 
-        menssagens = div.find_elements_by_css_selector(".message-out, .message-in")
+        menssagens = div.find_elements(by=By.CSS_SELECTOR, value=".message-out, .message-in")
 
         texto_encontrado = bool()
         cont_msg_env = 1

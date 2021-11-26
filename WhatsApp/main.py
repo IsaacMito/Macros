@@ -1,30 +1,40 @@
+import random
 from time import sleep
 
 from openpyxl import load_workbook
 
-from Util import contain, InputKeys
+from Util import InputKeys
 import WhatsApp
 
-texto = """*CALCE PERFEITO – COMPROU, ACHOU, GANHOU!*
+texto = """
+Olá {nome}
 
-É isso mesmo.
-A nossa promoção
-*Estoura Balão voltou!* 😍 🎉
+*BLACK FRIDAY – CALCE PERFEITO*
+⚫⬛⚫⬛⚫⬛
 
-*Você pode ganhar*
-vale-presentes, 
-kits de almofadas, 
-necessaire, e muito mais!*
+Chegou à data mais 
+esperada do ano. 😲🎁🍾
 
-*Corra!* 
-Essa promoção
-é válida por tempo 
-limitado! ⏳
+É desconto que não 
+acaba mais.
 
-*Para mais informações, é só nos chamar aqui no Whatsapp."""
+Tem calçados com 
+*preço único - R$ 99,00*
+👏🏻🔝
 
-xlsx_path = r"C:\Users\DEV\Desktop\CalceContatos\21-10-2021\ContatosAsaNorte.xlsx"
-file_path = r"C:\Users\DEV\Desktop\CalceContatos\21-10-2021\WhatsApp Image 2021-10-20 at 13.48.45.jpeg"
+Se preferir, tem ofertas 
+progressivas com até
+*30% de desconto*.
+
+Corra e aproveite
+*Black Friday Calce Perfeito!* 😍
+
+*Ofertas para calçados selecionados
+
+Para maiores informações só me perguntar."""
+
+xlsx_path = r"C:\Users\DEV\Desktop\Inauguração Calce Perfeito Guara (respostas).xlsx"
+file_path = r""
 
 xlsx = load_workbook(xlsx_path)
 sheet = xlsx.active
@@ -36,40 +46,43 @@ for r in range(1, max_row + 1):
 
     if input.executando:
 
-        cell_num = sheet.cell(column=1, row=r)
-        cell_ok = sheet.cell(column=2, row=r)
+        cell_nome = sheet.cell(column=1, row=r)
+        cell_num = sheet.cell(column=2, row=r)
+        cell_ok = sheet.cell(column=3, row=r)
 
         print(f"{r} - {max_row}: {cell_num.value}", end=" ")
+
+        if cell_nome.value is not None:
+            print(f"{cell_nome.value}", end=" ")
+
         if cell_ok.value is not None:
             print(f"{cell_ok.value}", end=" ")
 
         if cell_ok.value != "ok" and cell_ok.value != "!":
 
-                #Retirando 619
-                numero = str(cell_num.value)[3:]
+            #Retirando 619
+            numero = str(cell_num.value)[3:]
 
-                if not contain(numero):
+            if WhatsApp.pesquisar(numero):
 
-                    if WhatsApp.pesquisar(numero):
+                sleep(0.2)
 
-                        sleep(0.2)
-                        WhatsApp.colar(texto)
-                        sleep(0.6)
-                        WhatsApp.enviarARQ(file_path)
-                        sleep(1.65)
+                nome = str(cell_nome.value)
+                nome = nome.split()[0].capitalize()
 
-                        cell_ok.value = "ok"
-                        print("ok", end=" ")
+                tx = texto.replace("{nome}", nome)
 
-                    else:
+                WhatsApp.enviarTX(tx)
 
-                        cell_ok.value = "!"
-                        print("!", end=" ")
-                else:
+                cell_ok.value = "ok"
+                print("ok", end=" ")
+                xlsx.save(xlsx_path)
 
-                    cell_ok.value = "ok"
-                    print("ok", end=" ")
+                sleep(random.randrange(30, 40))
+            else:
 
+                cell_ok.value = "!"
+                print("!", end=" ")
                 xlsx.save(xlsx_path)
 
         print("")

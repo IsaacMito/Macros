@@ -31,7 +31,7 @@ def pesquisar( str=""):
 
     #Entrando no contato
     pyautogui.press("enter")
-    time.sleep(0.4)
+    time.sleep(0.5)
 
     #Verivicando se o contato existe
     return isImgIgual()
@@ -74,7 +74,7 @@ def isImgIgual():
 
     #Tira print da tela
     pyautogui.screenshot(region=[25,150,350,150]).save("img_com_pesq.png")
-    time.sleep(0.05)
+    time.sleep(0.1)
 
     img1 = cv2.imread("img_com_pesq.png", 0)
     img2 = cv2.imread("img_compare.png", 0)
@@ -84,7 +84,7 @@ def isImgIgual():
     #Tirando percentual de difereça
     porcent = (numpy.count_nonzero(res) * 100) / res.size
 
-    if porcent > 5:
+    if porcent > 8:
         return True
     else:
         return False
