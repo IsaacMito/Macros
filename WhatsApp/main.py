@@ -79,6 +79,7 @@ for r in range(1, max_row + 1):
                 xlsx.save(xlsx_path)
 
                 sleep(random.randrange(30, 40))
+
             else:
 
                 cell_ok.value = "!"
