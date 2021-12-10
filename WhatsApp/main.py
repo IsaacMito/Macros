@@ -9,31 +9,34 @@ import WhatsApp
 texto = """
 Olá {nome}
 
-*BLACK FRIDAY – CALCE PERFEITO*
-⚫⬛⚫⬛⚫⬛
+*CHEEGGGOOUU O NATAL!*
+*CALCE PERFEITO*
 
-Chegou à data mais 
-esperada do ano. 😲🎁🍾
+Venha conhecer a 
+a *Nova coleção* 
+Usaflex, Piccadilly 
+Opananken e Skechers.
 
-É desconto que não 
-acaba mais.
+Calçados leves, 
+coloridos e festivos
+para dar um 
+*up no visual.*
 
-Tem calçados com 
-*preço único - R$ 99,00*
-👏🏻🔝
+E tem mais! Em compras 
+a partir de R$ 400,00, 
+*você GANHA*
+ uma *linda toalha de banho* 
+para arrasar no verão!* 
+🎁 🛍️
 
-Se preferir, tem ofertas 
-progressivas com até
-*30% de desconto*.
+Aguardamos você com 
+café bem quentinho🥰
 
-Corra e aproveite
-*Black Friday Calce Perfeito!* 😍
+*Para mais informações, consulte o regulamento em alguma de nossas lojas."""
 
-*Ofertas para calçados selecionados
+sleep(4)
 
-Para maiores informações só me perguntar."""
-
-xlsx_path = r"C:\Users\DEV\Desktop\Inauguração Calce Perfeito Guara (respostas).xlsx"
+xlsx_path = r"C:\Users\DEV\Desktop\CalceContatos\CalceContatosControleSul.xlsx"
 file_path = r""
 
 xlsx = load_workbook(xlsx_path)
