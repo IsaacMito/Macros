@@ -70,7 +70,7 @@ class WhatsApp:
                             return f"{lista_msg_recebidas[0]}  /  {lista_msg_recebidas[len(lista_msg_recebidas) - 1]}".replace(
                                 "\n", " ")
                         else:
-                            return False
+                            return "Não respondeu"
                     else:
                         cont_msg_env += 1
 

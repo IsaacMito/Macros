@@ -61,7 +61,7 @@ for r in range(1, max_row + 1):
         if cell_ok.value is not None:
             print(f"{cell_ok.value}", end=" ")
 
-        if cell_ok.value != "ok" and cell_ok.value != "!":
+        if cell_ok.value != "Sim" and cell_ok.value != "Não":
 
             #Retirando 619
             numero = str(cell_num.value)[3:]
@@ -77,16 +77,16 @@ for r in range(1, max_row + 1):
 
                 WhatsApp.enviarTX(tx)
 
-                cell_ok.value = "ok"
-                print("ok", end=" ")
+                cell_ok.value = "Sim"
+                print("Sim", end=" ")
                 xlsx.save(xlsx_path)
 
                 sleep(random.randrange(30, 40))
 
             else:
 
-                cell_ok.value = "!"
-                print("!", end=" ")
+                cell_ok.value = "Não"
+                print("Não", end=" ")
                 xlsx.save(xlsx_path)
 
         print("")
