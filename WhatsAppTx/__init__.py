@@ -26,23 +26,28 @@ class WhatsApp:
             self.navegador.close()
             self.navegador.session_id = session_id
 
-    def getContact(self, numero=""):
-
-        if numero == "":
-            self.navegador.get(f"https://web.whatsapp.com/")
-        else:
-            self.navegador.get(f"https://web.whatsapp.com/send?phone={numero}")
+        self.navegador.get(f"https://web.whatsapp.com/")
 
         while len(self.navegador.find_elements(by=By.ID, value="side")) < 1:
             time.sleep(1)
 
-        time.sleep(2)
+    def getContact(self, numero=""):
+
+        self.navegador.get(f"https://web.whatsapp.com/send?phone={numero}")
+
+        while len(self.navegador.find_elements(by=By.ID, value="side")) < 1:
+            time.sleep(1)
+
+        time.sleep(4)
+
+        if len(self.navegador.find_elements(by=By.CLASS_NAME, value="_3J6wB")) < 1:
+            return True
+
+        return False
 
     def wasAnswered(self, texto, total_mensage_enviadas=1):
-        try:
-            div = self.navegador.find_element(by=By.CLASS_NAME, value="y8WcF")
-        except:
-            return False
+
+        div = self.navegador.find_element(by=By.CLASS_NAME, value="y8WcF")
 
         while len(div.find_elements(by=By.CSS_SELECTOR, value=".message-out, .message-in")) < 1:
             time.sleep(1)
@@ -61,25 +66,30 @@ class WhatsApp:
 
             if "message-out" in msg.get_attribute("class"):
 
-                if texto_encontrado:
-
-                    if total_mensage_enviadas == cont_msg_env:
-
-                        if len(lista_msg_recebidas) != 0:
-
-                            return f"{lista_msg_recebidas[0]}  /  {lista_msg_recebidas[len(lista_msg_recebidas) - 1]}".replace(
-                                "\n", " ")
-                        else:
-                            return "Não respondeu"
-                    else:
-                        cont_msg_env += 1
-
-                elif texto in msg.text:
+                if texto in msg.text:
 
                     texto_encontrado = True
 
+                    if total_mensage_enviadas == cont_msg_env:
+
+                        if len(msg.find_elements(by=By.CSS_SELECTOR, value="._3l4_3")) == 0:
+                            return ("Nao", "")
+
+                    else:
+                        cont_msg_env += 1
             else:
                 if texto_encontrado:
                     lista_msg_recebidas.append(msg.text)
 
-        return False
+        if len(lista_msg_recebidas) > 0:
+
+            if len(lista_msg_recebidas) == 1:
+                print()
+
+                return ("Sim", lista_msg_recebidas[0][:len(lista_msg_recebidas[0]) - 5].replace("\n", ""))
+            else:
+                return ("Sim",
+                        f"{lista_msg_recebidas[0][:len(lista_msg_recebidas[0]) - 5]}  |  {lista_msg_recebidas[len(lista_msg_recebidas) - 1][:len(lista_msg_recebidas[0]) - 5]}".replace(
+                            "\n", ""))
+        else:
+            return ("Sim", "")
