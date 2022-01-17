@@ -1,5 +1,6 @@
 import cx_Oracle
 from cx_Oracle import Cursor
+from openpyxl import load_workbook
 
 cx_Oracle.init_oracle_client(lib_dir=r"C:\SN5\Oracle\instantclient_21_3")
 
@@ -32,7 +33,7 @@ class Dao:
 
 
 # cod_campanha = 1
-# xlsx_path = r"C:\Users\DEV\Desktop\CalceContatos\RESPOSTA SUL.xlsx"
+# xlsx_path = r"C:\Users\DEV\Desktop\CalceContatos\RESPOSTA GUARA.xlsx"
 #
 # xlsx = load_workbook(xlsx_path)
 # sheet = xlsx.active
@@ -51,5 +52,5 @@ class Dao:
 #
 #     if cell_ok.value == "Sim":
 #
-#         if not dao.existeNumero(cod_campanha, cell_num.value):
+#         if not dao.existeNumero(cell_num.value):
 #             dao.criaNumero(cod_campanha, cell_num.value)

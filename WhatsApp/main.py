@@ -4,7 +4,7 @@ from time import sleep
 from openpyxl import load_workbook
 
 import WhatsApp
-from WhatsApp.IncluiNumero import Dao
+from WhatsApp.dao import Dao
 
 texto = """
 Olá {nome}
@@ -35,7 +35,7 @@ café bem quentinho🥰
 *Para mais informações, consulte o regulamento em alguma de nossas lojas."""
 
 cod_campanha = 1
-xlsx_path = r"C:\Users\DEV\Desktop\CalceContatos\RESPOSTA SUL.xlsx"
+xlsx_path = r"C:\Users\DEV\Desktop\CalceContatos\Inauguração Calce Perfeito Guara.xlsx"
 file_path = r""
 
 xlsx = load_workbook(xlsx_path)
@@ -58,12 +58,20 @@ for r in range(2, max_row + 1):
     if cell_ok.value is not None:
         print(f"{cell_ok.value}", end=" ")
 
+    numero = str(cell_num.value).replace("(", "")
+
+    if len(numero) == 9:
+        numero = "61" + numero
+
+    if len(numero) == 10:
+        numero = "619" + numero[2:]
+
     if cell_ok.value != "Sim" and cell_ok.value != "Nao":
 
-        if not dao.existeNumero(cell_num.value):
+        if not dao.existeNumero(numero):
 
             #Retirando 619
-            numero = str(cell_num.value)[3:]
+            numero = str(numero)[3:]
 
             if WhatsApp.pesquisar(numero):
 
