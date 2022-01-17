@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 
 cx_Oracle.init_oracle_client(lib_dir=r"C:\SN5\Oracle\instantclient_21_3")
 
+
 class Dao:
 
     def __init__(self):
