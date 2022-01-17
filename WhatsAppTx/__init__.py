@@ -40,7 +40,7 @@ class WhatsApp:
 
         time.sleep(4)
 
-        if len(self.navegador.find_elements(by=By.CLASS_NAME, value="_3J6wB")) < 1:
+        if len(self.navegador.find_elements(by=By.CLASS_NAME, value="_3J6wB")) == 0:
             return True
 
         return False
@@ -59,7 +59,7 @@ class WhatsApp:
         menssagens = div.find_elements(by=By.CSS_SELECTOR, value=".message-out, .message-in")
 
         texto_encontrado = bool()
-        cont_msg_env = 1
+        cont_msg_env:int = 1
         lista_msg_recebidas = list()
 
         for msg in menssagens:
@@ -72,7 +72,10 @@ class WhatsApp:
 
                     if total_mensage_enviadas == cont_msg_env:
 
-                        if len(msg.find_elements(by=By.CSS_SELECTOR, value="._3l4_3")) == 0:
+                        check = msg.find_elements(by=By.CLASS_NAME, value="do8e0lj9")[0]
+                        check = check.find_elements(by=By.TAG_NAME, value="span")[0]
+
+                        if "Enviada" in check.get_attribute("aria-label"):
                             return ("Nao", "")
 
                     else:
@@ -86,10 +89,10 @@ class WhatsApp:
             if len(lista_msg_recebidas) == 1:
                 print()
 
-                return ("Sim", lista_msg_recebidas[0][:len(lista_msg_recebidas[0]) - 5].replace("\n", ""))
+                return ("Sim", lista_msg_recebidas[0][:len(lista_msg_recebidas[0]) - 5].replace("\n", " "))
             else:
                 return ("Sim",
                         f"{lista_msg_recebidas[0][:len(lista_msg_recebidas[0]) - 5]}  |  {lista_msg_recebidas[len(lista_msg_recebidas) - 1][:len(lista_msg_recebidas[0]) - 5]}".replace(
-                            "\n", ""))
+                            "\n", " "))
         else:
             return ("Sim", "")

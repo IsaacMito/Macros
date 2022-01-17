@@ -2,7 +2,7 @@ from openpyxl import load_workbook
 
 from WhatsAppTx import WhatsApp
 
-path_exel = r"C:\Users\DEV\Desktop\teste.xlsx"
+path_exel = r"C:\Users\DEV\Desktop\CalceContatos\RESPOSTA NORTE.xlsx"
 arquivo_excel = load_workbook(path_exel)
 plan = arquivo_excel.active
 
@@ -16,7 +16,7 @@ if plan.cell(column=5, row=1).value != "RESPOSTA":
     plan.cell(column=4, row=1).value = "MENSAGEM ENTREGUE"
     plan.cell(column=5, row=1).value = "RESPOSTA"
 
-    plan.column_dimensions['A'].width = 8
+    plan.column_dimensions['A'].width = 50
     plan.column_dimensions['B'].width = 20
     plan.column_dimensions['C'].width = 22
     plan.column_dimensions['D'].width = 22
@@ -26,7 +26,7 @@ if plan.cell(column=5, row=1).value != "RESPOSTA":
 
 max_row = plan.max_row
 
-TEXTO = "CALCE"
+TEXTO = "CHEEGGGOOUU"
 
 ws = WhatsApp()
 
@@ -39,9 +39,12 @@ for r in range(1, max_row + 1):
 
     if cell_ok.value == "Sim":
 
-        if cell_res.value == None:
+        if cell_entregue.value == None:
 
             numero = str(cell_num.value).replace("+", "").replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+
+            if len(numero) == 11:
+                numero = "55" + numero
 
             print(f"{numero}", end=" ")
 
@@ -52,7 +55,9 @@ for r in range(1, max_row + 1):
                 cell_entregue.value = r[0]
                 cell_res.value = r[1]
             else:
-                cell_ok.value = "Contato não encontrado"
+                print("Contato não encontrado", end=" ")
+                cell_entregue.value = "Nao"
+                cell_res.value = ""
 
             print(f"= E: {cell_entregue.value} R: {cell_res.value}")
             arquivo_excel.save(path_exel)
